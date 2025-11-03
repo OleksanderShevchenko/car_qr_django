@@ -1,0 +1,58 @@
+{% load static %} <!DOCTYPE html>
+<html lang="uk" class="h-full bg-gray-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Car QR Service{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+</head>
+<body class="h-full">
+    <nav class="bg-gray-800">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                         <a href="{% url 'pages:welcome' %}">
+                             <img class="h-8 w-8" src="{% static 'images/logo.svg' %}"
+                                 alt="Car QR Service">
+                         </a>
+                    </div>
+                    <div class="hidden md:block">
+                        <div class="ml-10 flex items-baseline space-x-4">
+                            <a href="{% url 'pages:search' %}"
+                               class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+                               aria-current="page">Пошук</a>
+                            
+                            {% if user.is_authenticated %}
+                                <a href="{% url 'cars:list' %}"
+                                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Особистий
+                                    кабінет</a>
+                                <a href="{% url 'users:logout' %}"
+                                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Вийти</a>
+                            {% else %}
+                                <a href="{% url 'users:login' %}"
+                                   class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Увійти</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="bg-white shadow">
+        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">
+                {% block header %}{% endblock %}
+            </h1>
+        </div>
+    </header>
+    <main>
+        <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+{# Цей шаблон успадковує базовий каркас з base.html #}
+{% extends "base.html" %}
+
+{# Перевизначаємо блок заголовку сторінки #}
+{% block title %}Пошук авто{% endblock %}
+
+{# Перевизначаємо блок заголовку в шапці #}
+{% block header %}
+    Знайдіть власника авто за номерним знаком
+{% endblock %}
+
+{# Перевизначаємо основний блок контенту #}
+{% block content %}
+<div class="md:grid md:grid-cols-3 md:gap-6">
+    <div class="md:col-span-1">
+        <div class="px-4 sm:px-0">
+            <h3 class="text-base font-semibold leading-6 text-gray-900">Пошук</h3>
+            <p class="mt-1 text-sm text-gray-600">
+                Введіть державний номерний знак автомобіля, щоб отримати публічну інформацію та можливість зв'язатися з
+                власником.
+            </p>
+        </div>
+    </div>
+    <div class="mt-5 md:col-span-2 md:mt-0">
+        {# Наша HTMX форма для пошуку #}
+        <form hx-post="{% url 'pages:htmx_search' %}"
+              hx-target="#search-results"
+              hx-swap="innerHTML"
+              class="shadow sm:overflow-hidden sm:rounded-md">
+
+            {% csrf_token %}
+
+            <div class="space-y-6 bg-white px-4 py-5 sm:p-6">
+                <div>
+                    <label for="license_plate" class="block text-sm font-medium leading-6 text-gray-900">Номерний
+                        знак</label>
+                    <div class="mt-2">
+                        <input type="text" name="license_plate" id="license_plate"
+                               class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                               placeholder="AO1234BC">
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                <button type="submit"
+                        class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
+                    Пошук
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{# Цей блок буде динамічно оновлюватися результатами пошуку від HTMX #}
+<div id="search-results" class="mt-8">
+    {# Сюди буде вставлено вміст з partials/car_result.html #}
+</div>
+{% endblock %}
