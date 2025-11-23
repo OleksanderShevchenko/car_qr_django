@@ -1,1 +1,2 @@
 /django_car_service/.env
+/django_car_service/db.sqlite3
