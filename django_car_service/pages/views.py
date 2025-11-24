@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render
 
-from cars.models import Car  # Імпортуємо модель з іншого "додатку"
+from ..cars.models import Car  # Імпортуємо модель з іншого "додатку"
 
 
 def welcome_page_view(request):
